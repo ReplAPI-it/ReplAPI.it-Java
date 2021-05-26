@@ -1,0 +1,10 @@
+# Build and binary files
+target
+
+# replit files
+.replit
+
+# replapi files
+.replapirc.json
+ReplAPIConfig.java
+# Not sure acout having java config just yet. I will take a look and see if there are any packages which can handle config files.
