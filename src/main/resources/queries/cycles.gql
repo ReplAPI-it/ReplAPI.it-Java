@@ -1,0 +1,19 @@
+# Define the action: query or mutation
+
+# Variables start with `$` and are limited to a specific type.
+# If you follow the type with a `!` it will be required in the
+# action.
+query UserCycles($username: String!) {
+  # Type of query. For queries review schema
+  
+  # Query inputs are in `(...)` and can use literal values or 
+  # variables defined in the action
+  userByUsername(username: $username) {
+    # Query parameters can be seperated by spaces, newlines, 
+    # or commas
+    
+    # You can also precede a parameter by an alias to change
+    # its output
+    cycles: karma
+  }
+}
