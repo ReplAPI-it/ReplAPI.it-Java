@@ -1,21 +1,15 @@
 package me.replapiit.lib.json;
 
-/*
- * This class includes a majority of the JSON parser
- */
-
-// Import ArrayList and HashMap for data storage
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// Import Constructor for calling a constructor to create an object
 import java.lang.reflect.Constructor;
 
 public class JSONObject {
 
-	HashMap<String, Object> objData; // Stores data for object types
-	ArrayList<Object> arrData; // Stores data for array types
-	Types type; // Type of this JSONObject
+	HashMap<String, Object> objData;
+	ArrayList<Object> arrData;
+	Types type;
 
 	public JSONObject(String data, Types type) {
 		this.type = type;
@@ -26,12 +20,6 @@ public class JSONObject {
 		}
 	}
 
-	/**
-	 * Parses an array from a given data between the two square brackets
-	 * 
-	 * @param   data    the data between the square brackets
-	 * @return          an ArrayList of all of the data in the array
-	 **/
     private ArrayList<Object> parseArray(String data) {
 
 		ArrayList<Object> result = new ArrayList<Object>();
@@ -187,18 +175,8 @@ public class JSONObject {
         }
         return result;
     }
-
-    /**
-     * Parses an object from a given data between the two curly brackets
-     * 
-     * @param   data    the data between the curly brackets
-     * @return          a HashMap of all of the data in the object
-     **/
+	
     private HashMap<String, Object> parseObj(String data) {
-        /*
-         * Almost everything is the same as parseArray, so I am not going to
-         * re-document everything here.
-         */
         
         // HashMap instead of ArrayList
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -209,7 +187,6 @@ public class JSONObject {
         int[] depths = {0, 0};
         int[] values = {0};
         int i = 0;
-        // We need a key for each parameter of the object
 
         if(data.indexOf(":") == -1) {
             return result;
@@ -217,7 +194,7 @@ public class JSONObject {
 
         String currentKey = data.substring(i, data.indexOf(":", i)).trim();
         currentKey = currentKey.substring(1, currentKey.length() - 1);
-        // Move i to after key
+		
         i = data.indexOf(":", i) + 1;
         
         String currentContent = "";
@@ -238,8 +215,6 @@ public class JSONObject {
                         currentContent = "";
                     } else {
                         currentType = Types.NONE;
-                        // Notice this is different since we are using 
-                        // HashMap instead of ArrayList...
                         result.put(currentKey, new String(currentContent));
                         currentContent = "";
                     }
@@ -273,13 +248,10 @@ public class JSONObject {
                 currentContent += data.substring(i, i+1);
             } else if (thisChar == ',') {
                 if(!(currentContent.trim().length() > 0)) {
-                    // Even if nothing is found in this item, we need a new
-                    // key.
                     i++;
                     currentKey = data.substring(i, data.indexOf(":", i)).trim();
                     currentKey = currentKey.substring(1, currentKey.length() - 1);
                     i = data.indexOf(":", i);
-                    //System.out.println("New Key: " + currentKey);
                     currentContent = "";
                     continue;
                 }
@@ -303,12 +275,12 @@ public class JSONObject {
 
                     }
                 }
-                // Get new key
+				
                 i++;
                 currentKey = data.substring(i, data.indexOf(":", i)).trim();
                 currentKey = currentKey.substring(1, currentKey.length() - 1);
                 i = data.indexOf(":", i);
-                //System.out.println("New Key: " + currentKey);
+				
                 currentContent = "";
             } else {
                 currentContent += data.substring(i, i+1);
@@ -329,8 +301,6 @@ public class JSONObject {
                     try {
                         result.put(currentKey, (double)Double.parseDouble(currentContent));
                     } catch (Exception err) {
-                        //System.out.println("Warning: Unknown type");
-                        //System.out.println(currentContent);
                     }
 
                 }
@@ -339,13 +309,6 @@ public class JSONObject {
         return result;
     }
 
-    /**
-     * Gets if a char array includes a value
-     * 
-     * @param   arr     the array
-     * @param   value   the value
-     * @return          if value is in array
-     **/
     private boolean includes(char[] arr, char value) {
         for(char val : arr) {
             if(val == value) return true;
@@ -353,13 +316,6 @@ public class JSONObject {
         return false;
     }
 
-    /**
-     * Gets index of value in char array
-     * 
-     * @param   arr     the array
-     * @param   value   the value
-     * @return          index
-     **/
     private int getIndex(char[] arr, char value) {
         for(int i = 0; i < arr.length; i++) {
             char val = arr[i];
@@ -368,35 +324,18 @@ public class JSONObject {
         return -1;
     }
 
-    /**
-     * Gets first non-zero index of an int array
-     * 
-     * @param   arr     the array
-     * @return          index
-     **/
     private int getNonZeroIndex(int[] arr) {
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] != 0) return i;
         }
         return -1;
     }
-
-    /**
-     * Gets if an int array is all 0
-     * 
-     * @param   arr     the array
-     * @return          if all zero
-     **/
+	
     private boolean allZero(int[] arr) {
         for(int i : arr) if(i != 0) return false;
         return true;
     }
 
-    /**
-     * toString() method
-     * 
-     * @return    data as a String
-     **/
     public String toString() {
         if(type == Types.ARRAY) {
             String building = "[";
@@ -433,101 +372,48 @@ public class JSONObject {
         }
     }
     
-    /**
-     * Gets a key from an object
-     * 
-     * @param   key   the key
-     * @return        the value
-     **/
     public Object get(String key) {
         if(type == Types.ARRAY) return null;
         return objData.get(key);
     }
 
-    /**
-     * Sets a key in the object
-     * 
-     * @param   key   the key
-     * @param   val   the value
-     **/
     public void set(String key, Object val) {
         if(type == Types.ARRAY) return;
         objData.put(key, val);
     }
 
-    /**
-     * Sets an index in the array
-     * 
-     * @param   index   the index
-     * @param   val     the value
-     **/
     public void set(int index, Object val) {
         if(type == Types.OBJECT) return;
         arrData.set(index, val);
     }
 
-    /**
-     * Adds to the array
-     * 
-     * @param   val     the value
-     **/
     public void add(Object val) {
         if(type == Types.OBJECT) return;
         arrData.add(val);
     }
 
-    /**
-     * Adds to the array
-     * 
-     * @param   index   the index 
-     * @param   val     the value
-     **/
     public void add(int index, Object val) {
         if(type == Types.OBJECT) return;
         arrData.add(index, val);
     }
     
-    /**
-     * Gets an index from an array
-     * 
-     * @param   index   the index
-     * @return          the value
-     **/
     public Object get(int index) {
         if(type == Types.OBJECT) return null;
         return arrData.get(index);
     }
     
-    /**
-     * Accessor for ArrayList
-     * 
-     * @return   the ArrayList
-     **/
     public ArrayList<Object> getArrayList() {
         return arrData;
     }
     
-    /**
-     * Accessor for HashMap
-     * 
-     * @return   the HashMap
-     **/
     public HashMap<String, Object> getHashMap() {
         return objData;
     }
     
-    /**
-     * Create an object of a given class using this data
-     * 
-     * @param   classA   the class
-     * @return           the object
-     **/
-    public <T> T toObject(Class<T> classA) throws Exception {
-        // Get constructor
+    public <T> T toObject(Class<T> classA) {
         Constructor thisConstructor = getConstructor(1, classA);
 
-        // Make constructor accesible - otherwise error
-        thisConstructor.setAccessible(true);
+		thisConstructor.setAccessible(true);
         
         Object[] params = new Object[0];
         if(type == Types.OBJECT) params = new Object[]{objData};
@@ -536,24 +422,13 @@ public class JSONObject {
         return (T)(thisConstructor.newInstance(params));
     }
 
-    /**
-     * Get a constructor given a length and a class
-     * 
-     * @param   length   the length
-     * @param   classA   the class
-     * @return           the constructor
-     **/
     private Constructor getConstructor(int length, Class<?> classA) {
-        // Get list
         Constructor[] list = classA.getDeclaredConstructors();
-        // Loop through list
         for(Constructor current : list) {
-            // If length matches, return
             if(current.getParameterCount() == length) {
                 return current;
             }
         }
-        // No value = null
         return null;
     }
 }

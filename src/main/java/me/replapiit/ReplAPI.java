@@ -4,10 +4,12 @@ import me.replapiit.lib.json.JSONObject;
 import me.replapiit.lib.json.JSONParser;
 
 import me.replapiit.utils.VarBuilder;
+import me.replapiit.types.Board;
 import me.replapiit.types.Cycles;
 
 public class ReplAPI {
-    public static boolean test() throws Exception {
+	// This method is tempoarary cuz its faster.
+    public static boolean test() {
        // Constructing JSON object
        // Empty object
        JSONObject jo = JSONParser.parse("{}");
@@ -34,16 +36,12 @@ public class ReplAPI {
 
         // Now testing GraphQL:
         System.out.println("\n\nGraphQL Testing:");
-        Cycles cyclesTest = new Cycles();
-        VarBuilder build = new VarBuilder();
-        build.set("username", "AmazingMech2418");
-        System.out.println(cyclesTest.sendQuery(build).toString());
+        Cycles cycleTest = new Cycles();
+        System.out.println(cycleTest.getCycles("AmazingMech2418"));
+        Board boardTest = new Board();
+        System.out.println(boardTest.boardData("share"));
+        System.out.println(boardTest.boardData("learn"));
 
-	   return true;
+		return true;
     }
 }
-
-/**
- * Output:
- * {"testNum": 13, "testArray": ["testing...", 3, 3.5, false], "testStr": "Hello, world!"}
- */

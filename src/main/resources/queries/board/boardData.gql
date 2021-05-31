@@ -1,5 +1,0 @@
-query Board($slug: String!) {
-    boardBySlug(slug: $slug) {
-        id, name, description, slug, cta, titleCta, bodyCta, template, buttonCta, color, replRequired, isLocked, isAnswerable, isPrivate, timeCreated, timeUpdated, url, canPost
-    }
-}

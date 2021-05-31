@@ -1,15 +1,20 @@
-// Meant to be main class which all inherit from
 package me.replapiit.types;
 
 import me.replapiit.utils.GraphQL;
 
 import me.replapiit.utils.VarBuilder;
 import me.replapiit.utils.QueryReader;
-
+import me.replapiit.lib.json.JSONObject;
 
 public class Cycles extends Type {
-    public Cycles() throws Exception {
-        super(QueryReader.read("cycles"), 0);
-        // Is this good? I'm not sure what the ID thing is or how we will add more queries...
-    }
+	public Cycles() {
+		super();
+	}
+
+	public JSONObject getCycles(String username) {
+		String query = QueryReader.read("cycles");
+		VarBuilder builder = new VarBuilder();
+		builder.set("username", username);
+		return sendQuery(query, builder);
+	}
 }

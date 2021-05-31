@@ -6,24 +6,54 @@ import me.replapiit.lib.json.JSONParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class QueryReader {
+	private static HashMap<String, String> cache = new HashMap<String, String>();
 
 	private QueryReader() {}
 
-    public static String read(String fileInput) throws IOException {
-        String fileName = "queries/" + fileInput + ".gql";
+	public static String read(String fileInput) {
+		if(cache.containsKey(fileInput)) {
+			return cache.get(fileInput);
+		}
 
+		File f = new File(
+			QueryReader.class.getClassLoader().getResource(
+				"queries/" +
+				fileInput +
+				".gql"
+			).getFile()
+		);
 
-        File file = new File(ClassLoader.getSystemResource(fileName).getFile());
+		BufferedReader objReader = null;
+		StringBuilder sb = new StringBuilder();
 
-        String res = "";
-        Scanner scanner = new Scanner(file);
+		try {
+			objReader = new BufferedReader(new FileReader(f));
 
-        while(scanner.hasNextLine()) {
-            res += scanner.nextLine() + "\n";
-        }
+			String strCurrentLine;
 
-        return res;
-    }
+			while ((strCurrentLine = objReader.readLine()) != null) {
+				sb.append(strCurrentLine);
+			}
+		} catch(IOException ioe) {
+			System.err.println("Failed to read file \"" + f.getPath() + "\"");
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (objReader != null)
+					objReader.close();
+			} catch (IOException ioe) {
+				System.err.println("Failed to close BufferedReader");				
+				ioe.printStackTrace();
+			}
+		}
+
+		String result = sb.toString;
+
+		cache.put(fileInput, result);
+
+		return result;
+	}
 }

@@ -15,8 +15,14 @@ For general running purposes, do `mvn test` as it will compile the main src as w
 
 ## Dependencies ##
 
-* https://github.com/stleary/JSON-java
+* https://github.com/Cosium/git-code-format-maven-plugin?
 
 ## Progress ##
 
 * 5/25/2021 - Started project, added json dependency. Will probably be the only dependency.
+* 5/27(or 28)/2021 - Added AM2418 and got their json dependency and removed the other json dependency.
+* 5/29/2021 - Completed GraphQL interface system
+
+## Code Format ##
+
+* My (@EpicGamer007) preferred code format is tabs with 4 spaces in each tab. If possible, please use that format when coding and contributing to this project. (This is only until we get a maven plugin to auto format code for us).
