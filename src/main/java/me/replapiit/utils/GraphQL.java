@@ -7,7 +7,7 @@ public class GraphQL {
 	private String url;
 
 	public GraphQL() {
-		this.url = "https://staging.replit.com/graphql";
+		this.url = "https://replit.com/graphql";
 	}
 
 	public GraphQL(String url) {

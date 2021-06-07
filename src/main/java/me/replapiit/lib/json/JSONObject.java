@@ -410,7 +410,7 @@ public class JSONObject {
         return objData;
     }
     
-    public <T> T toObject(Class<T> classA) {
+    public <T> T toObject(Class<T> classA) throws Exception {
         Constructor thisConstructor = getConstructor(1, classA);
 
 		thisConstructor.setAccessible(true);

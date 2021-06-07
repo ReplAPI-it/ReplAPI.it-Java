@@ -22,7 +22,7 @@ public class Request {
 	* @param   _url   The URL to retrieve from
 	* @return         The response from the server
 	**/
-	public static String GET(String _url) {
+	public static String GET(String _url) throws Exception {
 		
 		URL url = new URL(_url);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -48,7 +48,7 @@ public class Request {
 	* @param   _url   The URL to send request to 
 	* @return         The response from the server
 	**/
-	public static String DELETE(String _url) {
+	public static String DELETE(String _url) throws Exception {
 
 		URL url = new URL(_url);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -74,7 +74,7 @@ public class Request {
 	* @param   _url   The URL to send request to 
 	* @return         The response from the server
 	**/
-	public static String POST(String _url, String params) {
+	public static String POST(String _url, String params) throws Exception {
 		
 		byte[] postData = params.getBytes(StandardCharsets.UTF_8);
 		int postDataLength = postData.length;
@@ -91,8 +91,8 @@ public class Request {
 		connection.setRequestProperty("Accept", "application/json");
 		connection.setRequestProperty("Connection", "keep-alive");
 		connection.setRequestProperty("X-Requested-With", "The ReplAPI.it Project (Java)");
-		connection.setRequestProperty("Referrer", "https://staging.replit.com/");
-		connection.setRequestProperty("Origin", "https://staging.replit.com");
+		connection.setRequestProperty("Referrer", "https://replit.com/");
+		connection.setRequestProperty("Origin", "https://replit.com");
 		connection.setRequestProperty("charset", "utf-8");
 		connection.setRequestProperty("Content-Length", Integer.toString(postDataLength));
 

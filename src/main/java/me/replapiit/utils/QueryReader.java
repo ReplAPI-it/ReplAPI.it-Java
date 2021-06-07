@@ -7,13 +7,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class QueryReader {
 	private static HashMap<String, String> cache = new HashMap<String, String>();
 
 	private QueryReader() {}
 
-	public static String read(String fileInput) {
+	public static String read(String fileInput) throws Exception {
 		if(cache.containsKey(fileInput)) {
 			return cache.get(fileInput);
 		}
@@ -25,32 +27,17 @@ public class QueryReader {
 				".gql"
 			).getFile()
 		);
+        /**
+         * Whatever you did broke this. I'm reverting back to Scanner.
+         */
 
-		BufferedReader objReader = null;
-		StringBuilder sb = new StringBuilder();
+        Scanner scanner = new Scanner(f);
+        String result = "";
+        while(scanner.hasNextLine()) {
+            result += scanner.nextLine() + "\n";
+        }
 
-		try {
-			objReader = new BufferedReader(new FileReader(f));
-
-			String strCurrentLine;
-
-			while ((strCurrentLine = objReader.readLine()) != null) {
-				sb.append(strCurrentLine);
-			}
-		} catch(IOException ioe) {
-			System.err.println("Failed to read file \"" + f.getPath() + "\"");
-			ioe.printStackTrace();
-		} finally {
-			try {
-				if (objReader != null)
-					objReader.close();
-			} catch (IOException ioe) {
-				System.err.println("Failed to close BufferedReader");				
-				ioe.printStackTrace();
-			}
-		}
-
-		String result = sb.toString;
+        scanner.close();
 
 		cache.put(fileInput, result);
 

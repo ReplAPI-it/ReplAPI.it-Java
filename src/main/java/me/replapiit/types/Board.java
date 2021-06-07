@@ -11,7 +11,7 @@ public class Board extends Type {
 		super();
 	}
 
-	public JSONObject boardData(String slug) {
+	public JSONObject boardData(String slug) throws Exception {
 		String query = QueryReader.read("board/boardBySlug");
 		VarBuilder builder = new VarBuilder();
 		builder.set("slug", slug);

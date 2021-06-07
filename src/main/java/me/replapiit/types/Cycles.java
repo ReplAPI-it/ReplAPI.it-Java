@@ -11,7 +11,7 @@ public class Cycles extends Type {
 		super();
 	}
 
-	public JSONObject getCycles(String username) {
+	public JSONObject getCycles(String username) throws Exception {
 		String query = QueryReader.read("cycles");
 		VarBuilder builder = new VarBuilder();
 		builder.set("username", username);

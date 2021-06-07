@@ -9,7 +9,7 @@ import me.replapiit.types.Cycles;
 
 public class ReplAPI {
 	// This method is tempoarary cuz its faster.
-    public static boolean test() {
+    public static boolean test() throws Exception {
        // Constructing JSON object
        // Empty object
        JSONObject jo = JSONParser.parse("{}");

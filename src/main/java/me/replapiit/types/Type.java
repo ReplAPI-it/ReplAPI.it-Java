@@ -13,7 +13,7 @@ public abstract class Type {
 		this.client = new GraphQL();
 	}
 
-	protected JSONObject sendQuery(String query, VarBuilder vars) {
+	protected JSONObject sendQuery(String query, VarBuilder vars) throws Exception {
 		return client.query(query, vars.getJSONObject());
 	}
 
